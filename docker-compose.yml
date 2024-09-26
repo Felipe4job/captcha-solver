@@ -1,0 +1,37 @@
+services:
+  # Serviço da aplicação Flask
+  captcha-solver:
+    build:
+      context: .
+    container_name: captcha-solver
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/captcha_solver
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - /app/__pycache__/
+    networks:
+      - captcha-network
+
+  # Serviço do MongoDB
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - captcha-network
+    restart: always
+
+volumes:
+  mongo-data:
+
+networks:
+  captcha-network:
+    driver: bridge

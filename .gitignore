@@ -1,0 +1,37 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.env
+
+# Logs
+*.log
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Docker
+*.pid
+*.log
+docker-compose.override.yml
+
+# Data
+data/images/processed/
+data/images/raw/
+data/knowledge.db
+
+# Model
+model/saved_model/
+model/*.h5
+
+# Ignore IDEs and editors configurations
+.vscode/
+.idea/
