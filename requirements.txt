@@ -1,2 +1,20 @@
-flask
+# Flask - Framework para a API
+Flask
+
+# PyMongo - Biblioteca para conectar ao MongoDB
 pymongo
+
+# Pillow - Biblioteca para processamento de imagens
+Pillow
+
+# TensorFlow - Biblioteca para criar e treinar redes neurais
+tensorflow
+
+# Keras - Interface de alto nível para TensorFlow
+keras
+
+# NumPy - Biblioteca para arrays e operações numéricas (necessária para o TensorFlow)
+numpy
+
+# Werkzeug - Biblioteca de WSGI usada internamente pelo Flask
+Werkzeug
