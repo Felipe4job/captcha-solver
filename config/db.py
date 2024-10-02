@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from config import MONGO_URI  # Importa o MONGO_URI do config/__init__.py
+from config import MONGO_URI
 
 # Função para conectar ao banco de dados
 def get_db():

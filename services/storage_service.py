@@ -1,4 +1,4 @@
-from config import get_collections
+from config.db import get_collections
 from datetime import datetime
 
 # Obter as coleções do MongoDB

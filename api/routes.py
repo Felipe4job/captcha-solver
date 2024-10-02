@@ -1,6 +1,6 @@
 from flask import request
 from services import save_training_data, validate_image_size, process_image, save_log
-from api import error_response, success_response
+from api.responses import error_response, success_response
 
 def configure_routes(app):
 
@@ -50,4 +50,4 @@ def configure_routes(app):
 
       except Exception as e:
         save_log("ERROR", f"Error during training data upload: {str(e)}")
-        return error_response("Internal server error", 500)
+        return error_response(f"Error during training data upload: {str(e)}", 500)

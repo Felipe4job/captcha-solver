@@ -10,7 +10,12 @@ def validate_image_size(image_file):
 
 # Função para processar a imagem (pode incluir binarização, redimensionamento, etc.)
 def process_image(image_file):
-    image = Image.open(BytesIO(image_file.read()))
-    image.verify()  # Verificar se a imagem é válida
-    # Aqui você pode aplicar transformações na imagem se necessário
-    return image
+    # Abrir a imagem usando PIL
+    image = Image.open(image_file)
+
+    # Converter a imagem para bytes
+    img_byte_arr = BytesIO()
+    image.save(img_byte_arr, format='JPEG')  # Você pode escolher PNG ou outro formato, se preferir
+    img_byte_arr = img_byte_arr.getvalue()
+
+    return img_byte_arr

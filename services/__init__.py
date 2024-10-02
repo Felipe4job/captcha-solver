@@ -1,5 +1,4 @@
 from .image_processing import process_image, validate_image_size
 from .inference import run_inference
-from .learning_service import update_model
-from .storage_service import save_training_data
+from .storage_service import save_training_data, save_log
 

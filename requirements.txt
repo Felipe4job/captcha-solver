@@ -18,3 +18,5 @@ numpy
 
 # Werkzeug - Biblioteca de WSGI usada internamente pelo Flask
 Werkzeug
+
+pytest
