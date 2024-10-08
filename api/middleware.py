@@ -5,7 +5,3 @@ from flask import request, jsonify
 def request_middleware():
   # Aqui você pode adicionar verificações e validações globais
   logging.info(f"Interceptando requisição para: {request.path}")
-  
-  # Exemplo de validação para garantir que a requisição seja JSON quando apropriado
-  # if request.method == "POST" and not request.is_json:
-  #   return jsonify({"status": "error", "message": "JSON body required"}), 400

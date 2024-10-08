@@ -18,6 +18,7 @@ services:
       - captcha-network
 
   # Serviço do MongoDB
+  # docker exec -it 504 mongosh
   mongo:
     image: mongo
     container_name: mongo

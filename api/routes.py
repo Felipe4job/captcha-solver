@@ -1,5 +1,5 @@
 from flask import request
-from services import save_training_data, validate_image_size, process_image, save_log
+from services import save_training_data, validate_image_size, process_image, save_log, get_images_with_empty_result
 from api.responses import error_response, success_response
 
 def configure_routes(app):
@@ -8,38 +8,31 @@ def configure_routes(app):
     def train_captcha_model():
       try:
         # Verificar se há arquivos e dados JSON na requisição
-        if 'images' not in request.files or 'results' not in request.form:
-            return error_response("Images and results are required", 400)
+        if 'images' not in request.files:
+            return error_response("Images are required", 400)
 
         images = request.files.getlist('images')
-        results = request.form.getlist('results')
 
         # Validar a quantidade de imagens
         if len(images) > 10:
             return error_response(f"Maximum 10 images allowed per request", 400)
 
-        # Verificar se o número de imagens corresponde ao número de resultados
-        if len(images) != len(results):
-            return error_response("Each image must have a corresponding result", 400)
-
         training_data = []
 
         # Processar cada imagem
-        for i, image_file in enumerate(images):
+        for image_file in images:            
+
             # Validar o tamanho da imagem
             if not validate_image_size(image_file):
                 return error_response(f"Image {image_file.filename} exceeds maximum size of 2MB", 400)
 
             # Processar a imagem (transformar, validar)
-            try:
-                processed_image = process_image(image_file)
-            except Exception as e:
-                return error_response(f"Invalid image {image_file.filename}: {str(e)}", 400)
+            processed_image = process_image(image_file)
 
             # Adicionar à lista de dados de treinamento
             training_data.append({
                 "image_name": image_file.filename,
-                "result": results[i],
+                "result": "",
                 "image_data": processed_image
             })
 
@@ -51,3 +44,19 @@ def configure_routes(app):
       except Exception as e:
         save_log("ERROR", f"Error during training data upload: {str(e)}")
         return error_response(f"Error during training data upload: {str(e)}", 500)
+
+
+    @app.route("/captcha/images/pending", methods=["GET"])
+    def get_pending_images():
+        try:
+            # Obter imagens com campo result vazio
+            pending_images = get_images_with_empty_result()
+
+            if not pending_images:
+                return success_response("No pending images found", 200)
+
+            return success_response(pending_images, 200)
+
+        except Exception as e:
+            save_log("ERROR", f"Error retrieving pending images: {str(e)}")
+            return error_response(f"Error retrieving pending images: {str(e)}", 500)
